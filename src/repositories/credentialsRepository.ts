@@ -19,3 +19,12 @@ export async function getCredentialById(id: number){
 export async function insert(newCredential: UserCredential) {
     await prisma.credentials.create({data: newCredential})
 }
+
+export async function getCredentialByuserIdAndId(userId:number,id:number){
+    const credentialByUserAndId = await prisma.credentials.findFirst({where:{id, userId}})
+    return credentialByUserAndId
+}
+
+export async function deleteCredential(id: number){
+    await prisma.credentials.delete({where: {id}})
+}

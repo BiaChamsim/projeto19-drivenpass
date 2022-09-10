@@ -48,7 +48,6 @@ export async function getCredentials(userId: number, id: number){
 
         return decryptedCredential
     }else{
-        //TODO: buscar credenciais pelo id dela mesma
         const credentialById = await credentialsRepository.getCredentialById(id)
 
         if(!credentialById){
@@ -60,8 +59,8 @@ export async function getCredentials(userId: number, id: number){
 
         if(credentialById.userId !== userId){
             throw{
-                code: "not found",
-                message: "User not found"
+                code: "conflict",
+                message: "This credential does not belong to this user"
             }
         }
 
@@ -71,8 +70,6 @@ export async function getCredentials(userId: number, id: number){
 
         return decryptedCredencial
     }
-
-
 }
 
 function decryptPassword(password: string){
@@ -84,4 +81,24 @@ function decryptPassword(password: string){
 }
 
 
+export async function deleteCredentials(userId: number, id: number){ 
+
+    await verifyUserIdAndId(userId, id)
+
+    await credentialsRepository.deleteCredential(id)
+}
+
+
+async function verifyUserIdAndId(userId:number, id:number){
+    const credential = await credentialsRepository.getCredentialByuserIdAndId(userId, id)
+
+    console.log(credential)
+
+    if(!credential){
+        throw{
+            code:"unauthorized",
+            message:"Não autorizado"
+        }
+    }
+}
 

@@ -36,9 +36,29 @@ export async function getCredential(req: Request, res: Response){
             return res.status(422).send(error.message)
         }else if(error.code === "not found"){
             return res.status(404).send(error.message)
+        }else if(error.code === "conflict"){
+            return res.status(409).send(error.message)
         }
         console.log(error)
         res.sendStatus(500)
     }
 
+}
+
+export async function deleteCredentials(req: Request, res: Response){  
+    try{
+        const userId = res.locals.userId.userId;
+        const id: number = Number(req.params.id);
+    
+        await credentialsService.deleteCredentials(userId, id)
+    
+        res.sendStatus(200);
+
+    }catch(error: any){
+        if(error.code === "unauthorized"){
+            return res.status(401).send(error.message)
+        }
+        console.log(error)
+        res.sendStatus(500)
+    }
 }
