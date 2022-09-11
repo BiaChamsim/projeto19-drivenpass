@@ -4,10 +4,10 @@ import validateTokenMiddleware from "../middlewares/validateTokenMiddleware";
 
 import {createCredential, getCredential, deleteCredentials} from "../controllers/credentialsController";
 
-const authRouter = Router();
+const credentialsRouter = Router();
 
-authRouter.post("/credentials", credentialMiddleware, validateTokenMiddleware, createCredential)
-authRouter.get("/credentials", validateTokenMiddleware, getCredential)
-authRouter.delete("/credentials/:id", validateTokenMiddleware, deleteCredentials)
+credentialsRouter.post("/credentials", credentialMiddleware, validateTokenMiddleware, createCredential)
+credentialsRouter.get("/credentials", validateTokenMiddleware, getCredential)
+credentialsRouter.delete("/credentials/:id", validateTokenMiddleware, deleteCredentials)
 
-export default authRouter;
+export default credentialsRouter;

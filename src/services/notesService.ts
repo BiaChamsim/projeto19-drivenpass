@@ -1,4 +1,3 @@
-import { not } from "joi";
 import * as notesRepository from "./../repositories/notesRepository";
 
 export async function createNotes(title: string, description: string, userId: number){
